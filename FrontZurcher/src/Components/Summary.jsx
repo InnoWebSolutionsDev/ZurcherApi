@@ -4,10 +4,7 @@ import {
   expenseActions,
   balanceActions,
 } from "../Redux/Actions/balanceActions";
-import { Worker } from '@react-pdf-viewer/core';
-import { Viewer } from '@react-pdf-viewer/core';
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.js?url';
+
 
 
 
@@ -42,7 +39,7 @@ const Summary = () => {
   const [editModal, setEditModal] = useState({ open: false, movement: null });
   const [editData, setEditData] = useState({});
   const [receiptUrl, setReceiptUrl] = useState(null);
-  const defaultLayoutPluginInstance = defaultLayoutPlugin();
+  
   // Obtener movimientos con filtros
   const fetchMovements = async () => {
     setLoading(true);
@@ -388,15 +385,17 @@ const Summary = () => {
       >
         Cerrar
       </button>
-      {receiptUrl.toLowerCase().endsWith('.pdf') ? (
-        <Worker workerUrl={pdfWorker}>
+      {receiptUrl.fileUrl && receiptUrl.mimeType  ? (
+        
           <div style={{ height: '600px' }}>
-            <Viewer
-              fileUrl={receiptUrl}
-              plugins={[defaultLayoutPluginInstance]}
+            <img
+            src={receiptUrl.fileUrl}
+              
+              alt="Comprobante"
+              className="max-h-[600px] mx-auto"
             />
           </div>
-        </Worker>
+       
       ) : (
         <img
           src={receiptUrl}
